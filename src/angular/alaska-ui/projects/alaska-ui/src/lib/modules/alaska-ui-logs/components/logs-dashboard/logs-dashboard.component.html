@@ -1,0 +1,56 @@
+<div class="table-container" 
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()">
+
+  <button 
+    class="reconnect-button"
+    mat-raised-button
+    color="primary" 
+    *ngIf="isDisconnected()" 
+    (click)="reconnect()">Reconnect
+  </button>
+
+  <table class="table table-md">
+    <thead>
+        <th scope="col">ApplicationId</th>
+        <th scope="col">TimeStamp</th>
+        <th scope="col">Level</th>
+        <th scope="col">Message</th>
+        <th scope="col">Exception</th>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let log of logs; let i = index">
+        <tr  
+          [ngClass]="{'table-warning': isWarning(log), 'table-danger': isError(log)}"
+          data-toggle="collapse"
+          [attr.data-target]="'#log-details-' + i"
+          class="clickable">
+          <td>{{log.applicationId}}</td>
+          <td>{{log.timeStamp}}</td>
+          <td>{{log.level}}</td>
+          <td>{{log.shortMessage}}</td>
+          <td> 
+            <button *ngIf="log.details.exception"
+              mat-raised-button color="warn"
+              data-toggle="collapse" 
+              [attr.data-target]="'#log-details-' + i">Exception</button>
+          </td>
+        </tr>
+        <tr id="log-details-{{i}}" class="collapse">
+          <td colspan="5">
+            <div>
+              <p>{{log.details.fullMessage}}</p>
+              <div *ngIf="log.details.exception">
+                Exception:
+                <div [innerHTML]="getExceptionDetails(log.details.exception)"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      
+    </tbody>
+  </table>
+</div>

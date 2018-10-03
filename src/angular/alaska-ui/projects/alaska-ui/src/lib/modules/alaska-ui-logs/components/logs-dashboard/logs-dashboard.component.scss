@@ -1,0 +1,61 @@
+
+.clickable {
+  cursor: pointer;
+}
+
+.table-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.reconnect-button {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+tr.logs-detail-row {
+  height: 0;
+}
+
+tr.logs-element-row:not(.logs-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.logs-element-row:not(.logs-expanded-row):active {
+  background: #efefef;
+}
+
+.logs-element-row td {
+  border-bottom-width: 0;
+}
+
+.logs-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.logs-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.logs-element-level {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.logs-element-exception {
+  padding: 16px;
+}
+
+.mat-header-cell {
+  font-size: 20px;
+}
