@@ -1,18 +1,23 @@
 ﻿using Alaska.Feature.Cache.Controllers;
+using Alaska.Foundation.Core.Caching.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Alaska.Feature.Cache.Extensions
 {
     public static class CacheDIExtensions
     {
-        public static IMvcCoreBuilder AddAlaskaCache(this IServiceCollection services)
+        public static IServiceCollection AddAlaskaCache(this IServiceCollection services)
         {
-            return services
+            services
                 .AddMvcCore()
                 .AddApplicationPart(typeof(CacheController).Assembly);
+
+            return services
+                .AddCacheService();
         }
     }
 }
