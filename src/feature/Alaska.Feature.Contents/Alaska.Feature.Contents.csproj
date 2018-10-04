@@ -13,4 +13,8 @@
     <ProjectReference Include="..\..\Foundation\Alaska.Foundation.Core\Alaska.Foundation.Core.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Debug (&#xD;&#xA;copy /y $(OutDir)$(TargetName).dll $(SolutionDir)build&#xD;&#xA;copy /y $(OutDir)$(TargetName).pdb $(SolutionDir)build&#xD;&#xA;copy /y $(OutDir)$(TargetName).deps.json $(SolutionDir)build&#xD;&#xA;)" />
+  </Target>
+
 </Project>
