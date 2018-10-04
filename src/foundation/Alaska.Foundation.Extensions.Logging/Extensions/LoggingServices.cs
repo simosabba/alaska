@@ -16,6 +16,10 @@ namespace Microsoft.Extensions.DependencyInjection
             var options = new LogsOptions();
             initializer?.Invoke(options);
 
+            services
+                .AddMvcCore()
+                .AddApplicationPart(typeof(LogsHub).Assembly);
+
             var s = services
                 .AddSingleton(options)
                 .AddSingleton<LogsCleanupService>()
