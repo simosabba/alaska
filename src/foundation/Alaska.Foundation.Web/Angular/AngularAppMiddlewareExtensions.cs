@@ -77,7 +77,7 @@ namespace Microsoft.AspNetCore.Builder
 
         public string BaseUrl { get; set; } = "/";
 
-        public List<string> PathsToExclude { get; set; } = new List<string> { "/api", "/alaska", "swagger" };
+        public List<string> PathsToExclude { get; set; } = new List<string> { "/api", "/hub", "/alaska", "swagger" };
 
         public object InlineSettings { get; set; }
     }
