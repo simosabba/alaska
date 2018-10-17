@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Alaska.Foundation.Godzilla.Abstractions
 {
-    public interface IEntity : IDatabaseCollectionElement
+    public interface IDatabaseCollectionElement
     {
+        Guid Id { get; set; }
     }
 }
