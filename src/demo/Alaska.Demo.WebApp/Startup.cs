@@ -55,6 +55,8 @@ namespace Alaska.Demo.WebApp
             app.UseCookiePolicy();
             
             app.UseMvc();
+
+            app.UseGodzilla();
         }
     }
 }

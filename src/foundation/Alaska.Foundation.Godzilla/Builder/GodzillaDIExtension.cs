@@ -15,6 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return services
                 .AddSingleton(options)
+                .AddSingleton<EntityCollectionResolver>()
+                .AddSingleton<EntityContextBuilder>()
                 .AddScoped<EntityContext>();
         }
     }
