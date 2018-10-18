@@ -6,5 +6,6 @@ namespace Alaska.Foundation.Godzilla.Abstractions
 {
     public interface IEntity : IDatabaseCollectionElement
     {
+        string EntityName { get; }
     }
 }

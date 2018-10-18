@@ -11,5 +11,6 @@ namespace Alaska.Foundation.Godzilla.Entities.Containers
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string EntityName { get; set; }
     }
 }

@@ -6,5 +6,7 @@ namespace Alaska.Foundation.Godzilla.Services
 {
     internal class EntityCollectionResolver
     {
+        public EntityCollectionResolver()
+        { }
     }
 }
