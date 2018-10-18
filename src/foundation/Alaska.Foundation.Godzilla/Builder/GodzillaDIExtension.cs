@@ -8,16 +8,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class GodzillaDIExtension
     {
-        public static IServiceCollection AddGodzilla(this IServiceCollection services, Action<GodzillaOptions> setupAction = null)
+        public static IServiceCollection AddEntityContext<T>(this IServiceCollection services, Action<EntityContextOptions<T>> setupAction = null)
+            where T : EntityContext
         {
-            var options = new GodzillaOptions();
+            var options = new EntityContextOptions<T>();
             setupAction?.Invoke(options);
 
             return services
                 .AddSingleton(options)
-                .AddSingleton<EntityCollectionResolver>()
-                .AddSingleton<EntityContextBuilder>()
-                .AddScoped<EntityContext>();
+                .AddScoped<T>();
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Alaska.Demo.WebApp.Infrastructure.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,10 @@ namespace Alaska.Demo.WebApp
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddGodzilla();
+            services.AddEntityContext<AlaskaEntityContext>(opt => 
+            {
+                opt.Collections.ConnectionString = Configuration.GetConnectionString("Alaska");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,8 +59,6 @@ namespace Alaska.Demo.WebApp
             app.UseCookiePolicy();
             
             app.UseMvc();
-
-            app.UseGodzilla();
         }
     }
 }

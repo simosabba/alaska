@@ -10,8 +10,7 @@ namespace Alaska.Foundation.Godzilla.Abstractions
     public interface IDatabaseCollectionProvider<T>
         where T : IDatabaseCollectionElement
     {
-        string CollectionName { get; }
-
+        void Configure(Settings.DatabaseCollectionProviderOptions options);
         long Count();
         long Count<TDerived>() where TDerived : T;
         bool Contains(Guid itemId);

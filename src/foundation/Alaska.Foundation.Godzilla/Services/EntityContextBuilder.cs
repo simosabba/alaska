@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Alaska.Foundation.Godzilla.Services
 {
-    internal class EntityContextBuilder
+    internal class EntityContextBuilder<T>
     {
         public void Build()
         {
-            using (new Profiler($"{nameof(EntityContextBuilder)}"))
+            using (new Profiler($"{nameof(EntityContextBuilder<T>)}"))
             {
             }
         }

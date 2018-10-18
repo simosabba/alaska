@@ -9,9 +9,9 @@ namespace Alaska.Foundation.Godzilla.Services
 {
     internal class PathBuilder
     {
-        private readonly GodzillaOptions _options;
+        private readonly EntityContextOptions _options;
 
-        public PathBuilder(GodzillaOptions options)
+        public PathBuilder(EntityContextOptions options)
         {
             _options = options;
         }

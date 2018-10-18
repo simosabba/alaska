@@ -1750,7 +1750,7 @@
     "HtmlAgilityPack/1.8.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BQd2+n09vUKqc/oj6kmCU23tS/PnDeIXKb2Bhi7Wg02bvetX97j4mUVwosD0tHzr7iE8TbV7K/4jzO/ru0T2Aw==",
+      "sha512": "sha512-pzmN9jcuPdQ/2ybEbLU70huZglo5IcBs9tTbEOVN77oDYkwGt0031H6A1q4cnyTgVritK62NprY1Z6QTp2b0+g==",
       "path": "htmlagilitypack/1.8.5",
       "hashPath": "htmlagilitypack.1.8.5.nupkg.sha512"
     },
@@ -2380,7 +2380,7 @@
     "System.Data.SqlClient/4.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qXTvTFkBds7bnN+ntBMHGvmH3pCAkfT4TE1z2Xvfqo4wKMQC77O4aXsYCc7dzCESC+/Gom6l0GLuebpFx7MDvg==",
+      "sha512": "sha512-cTPUCClr34EGBnyazUeciMD6sNm9aiE/li3uGvJ7z5dGup9QxKwysUeKXIrCO0E5KtQQAzGORFEYmowyEpcL2A==",
       "path": "system.data.sqlclient/4.5.1",
       "hashPath": "system.data.sqlclient.4.5.1.nupkg.sha512"
     },
@@ -2485,7 +2485,7 @@
     "System.Memory/4.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vcG3/MbfpxznMkkkaAblJi7RHOmuP7kawQMhDgLSuA1tRpRQYsFSCTxRSINDUgn2QNn2jWeLxv8er5BXbyACkw==",
+      "sha512": "sha512-oonnLQPZAGD21qtNMG4EtVmbYOInk2jV7M+g108B6OHOb67ZOaWnA/K8P5oQ6uK9wxKzB1iEXSChQOi2scKOqA==",
       "path": "system.memory/4.5.1",
       "hashPath": "system.memory.4.5.1.nupkg.sha512"
     },

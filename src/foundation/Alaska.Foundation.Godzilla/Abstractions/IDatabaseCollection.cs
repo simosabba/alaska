@@ -14,7 +14,6 @@ namespace Alaska.Foundation.Godzilla.Abstractions
     public interface IDatabaseCollection<T>
         where T : IDatabaseCollectionElement
     {
-        string CollectionName { get; }
         IQueryable<T> AsQueryable();
         IQueryable<TDerived> AsQueryable<TDerived>() where TDerived : T;
         long Count();

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Relations\**" />
+    <EmbeddedResource Remove="Relations\**" />
+    <None Remove="Relations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.2" />
@@ -13,10 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Alaska.Foundation.Core\Alaska.Foundation.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Relations\" />
   </ItemGroup>
 
 </Project>
