@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Alaska.Foundation.Core.Utils;
+using Alaska.Foundation.Godzilla.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Alaska.Foundation.Godzilla.Services
@@ -8,5 +12,33 @@ namespace Alaska.Foundation.Godzilla.Services
     {
         public EntityCollectionResolver()
         { }
+
+        public Guid ResolveTemplateId(Type elementType)
+        {
+            var template = elementType
+                .GetCustomAttribute<TemplateAttribute>();
+            if (template == null)
+                throw new InvalidOperationException("Missing type template");
+            return new Guid(template.Id);
+        }
+
+        public string ResolveCollectionName(Type elementType)
+        {
+            var root = ResolveRootTemplateType(elementType);
+            var template = root.GetCustomAttribute<TemplateAttribute>();
+            return $"entities-{template.Id}";
+        }
+
+        private Type ResolveRootTemplateType(Type elementType)
+        {
+            var baseTypes = ReflectionUtil.GetBaseTypes(elementType);
+            return baseTypes
+                .LastOrDefault(x => IsTemplatedType(x));
+        }
+
+        private bool IsTemplatedType(Type elementType)
+        {
+            return elementType.GetCustomAttribute<TemplateAttribute>() != null;
+        }
     }
 }

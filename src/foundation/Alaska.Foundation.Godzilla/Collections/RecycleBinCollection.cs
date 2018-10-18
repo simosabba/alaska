@@ -9,7 +9,7 @@ namespace Alaska.Foundation.Godzilla.Collections
     internal class RecycleBinCollection : DatabaseCollection<RecycleBinElement>
     {
         public RecycleBinCollection(DatabaseCollectionOptions options)
-            : base(options)
+            : base("recycle-bin", options)
         { }
     }
 }

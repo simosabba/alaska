@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Alaska.Foundation.Core\Alaska.Foundation.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
+
 </Project>

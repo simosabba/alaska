@@ -18,37 +18,29 @@ namespace Alaska.Foundation.Godzilla.Collections
     {
         #region Init
         
-        private IDatabaseCollectionProvider<TElement> _provider;
+        private readonly IDatabaseCollectionProvider<TElement> _provider;
         private readonly DatabaseCollectionOptions _options;
 
-        public DatabaseCollection(DatabaseCollectionOptions options)
+        public DatabaseCollection(string collectionName, DatabaseCollectionOptions options)
         {
             _options = options;
+            _provider = CreateProviderInstance(collectionName, options);
         }
 
         protected bool IsLogDisabled => _options.DisableLogs;
         protected IDatabaseCollectionProvider<TElement> Provider => _provider;
         
-        private IDatabaseCollectionProvider<TElement> CreateProviderInstance(DatabaseCollectionOptions options)
+        private IDatabaseCollectionProvider<TElement> CreateProviderInstance(string collectionName, DatabaseCollectionOptions options)
         {
             var provider = (IDatabaseCollectionProvider<TElement>)Activator.CreateInstance(options.ProviderType);
             provider.Configure(new DatabaseCollectionProviderOptions
             {
-                CollectionName = GetCollectionName(),
+                CollectionName = collectionName,
                 ConnectionString = options.ConnectionString
             });
             return provider;
         }
-
-        private string GetCollectionName()
-        {
-            var type = GetType();
-            if (!type.IsGenericTypeDefinition)
-                return this.GetType().Name;
-
-            return $"{type.Name}-{type.GetGenericTypeDefinition().Name}";
-        }
-
+        
         #endregion
 
         #region Collection Methods

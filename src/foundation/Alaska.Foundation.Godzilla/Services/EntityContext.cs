@@ -11,6 +11,7 @@ namespace Alaska.Foundation.Godzilla.Services
     {
         private readonly EntityContextOptions _options;
         private readonly PathBuilder _pathBuilder;
+        private readonly EntityCollectionResolver _resolver;
         private readonly HierarchyCollection _hierarchyCollection;
         private readonly RecycleBinCollection _recycleBinCollection;
 
@@ -18,7 +19,8 @@ namespace Alaska.Foundation.Godzilla.Services
         {
             _options = options ?? throw new ArgumentException(nameof(options));
             _pathBuilder = new PathBuilder(options);
-            _hierarchyCollection = new HierarchyCollection(options.Collections, _pathBuilder);
+            _resolver = new EntityCollectionResolver();
+            _hierarchyCollection = new HierarchyCollection(options.Collections, _resolver, _pathBuilder);
             _recycleBinCollection = new RecycleBinCollection(options.Collections);
         }
     }

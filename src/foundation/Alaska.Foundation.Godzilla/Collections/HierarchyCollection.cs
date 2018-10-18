@@ -17,13 +17,16 @@ namespace Alaska.Foundation.Godzilla.Collections
     internal class HierarchyCollection : DatabaseCollection<HierarchyEntry>
     {
         private readonly PathBuilder _pathBuilder;
+        private readonly EntityCollectionResolver _resolver;
 
         public HierarchyCollection(
             DatabaseCollectionOptions options,
+            EntityCollectionResolver resolver,
             PathBuilder pathBuilder)
-            : base(options)
+            : base("hierarchy", options)
         {
             _pathBuilder = pathBuilder;
+            _resolver = resolver;
         }
 
         internal void CreateRoot(IEntity rootEntity)
@@ -35,8 +38,8 @@ namespace Alaska.Foundation.Godzilla.Collections
                 Path = _pathBuilder.RootPath,
                 ItemId = rootEntity.Id,
                 ParentId = Guid.Empty,
-                //CollectionName = GetCollectionName(rootEntity.GetType()),
-                //TemplateId = GetTemplateId(rootEntity.GetType()).ToString(),
+                CollectionName = GetCollectionName(rootEntity.GetType()),
+                TemplateId = GetTemplateId(rootEntity.GetType()).ToString(),
                 Origin = ItemOrigin.System,
                 State = ItemState.Protected,
             };
@@ -228,8 +231,8 @@ namespace Alaska.Foundation.Godzilla.Collections
                 Name = x.EntityName,
                 ItemId = x.Id,
                 ParentId = parent.Id,
-                //CollectionName = GetCollectionName(x.GetType()),
-                //TemplateId = GetTemplateId(x.GetType()).ToString(),
+                CollectionName = GetCollectionName(x.GetType()),
+                TemplateId = GetTemplateId(x.GetType()).ToString(),
                 Origin = origin,
                 State = state,
             }).ToList();
@@ -277,14 +280,14 @@ namespace Alaska.Foundation.Godzilla.Collections
             return hierarchyItem;
         }
 
-        //protected string GetCollectionName(Type type)
-        //{
-        //    return Resolver.GetCollectionName(type);
-        //}
+        protected string GetCollectionName(Type elementType)
+        {
+            return _resolver.ResolveCollectionName(elementType);
+        }
 
-        //protected Guid GetTemplateId(Type type)
-        //{
-        //    return TypesMap.GetTemplateId(type);
-        //}
+        protected Guid GetTemplateId(Type elementType)
+        {
+            return _resolver.ResolveTemplateId(elementType);
+        }
     }
 }
