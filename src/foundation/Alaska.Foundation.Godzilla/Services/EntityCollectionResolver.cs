@@ -1,5 +1,7 @@
 ﻿using Alaska.Foundation.Core.Utils;
+using Alaska.Foundation.Godzilla.Abstractions;
 using Alaska.Foundation.Godzilla.Attributes;
+using Alaska.Foundation.Godzilla.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,22 @@ namespace Alaska.Foundation.Godzilla.Services
         public EntityCollectionResolver()
         { }
 
-        public Guid ResolveTemplateId(Type elementType)
+        public EntityCollectionBase ResolveCollection<T>()
         {
-            var template = elementType
-                .GetCustomAttribute<TemplateAttribute>();
-            if (template == null)
-                throw new InvalidOperationException("Missing type template");
-            return new Guid(template.Id);
+            return ResolveCollection(typeof(T));
+        }
+
+        public EntityCollectionBase ResolveCollection(Type elementType)
+        {
+            var collectionName = ResolveCollectionName(elementType);
+            var entityCollectionType = ResolveCollectionType(elementType);
+            return (EntityCollectionBase)Activator.CreateInstance(entityCollectionType);
+        }
+
+        public Type ResolveCollectionType(Type elementType)
+        {
+            var rootType = ResolveRootTemplateType(elementType);
+            return typeof(EntityCollection<>).MakeGenericType(rootType);
         }
 
         public string ResolveCollectionName(Type elementType)
@@ -27,6 +38,25 @@ namespace Alaska.Foundation.Godzilla.Services
             var root = ResolveRootTemplateType(elementType);
             var template = root.GetCustomAttribute<TemplateAttribute>();
             return $"entities-{template.Id}";
+        }
+
+        public Guid ResolveTemplateId<T>()
+        {
+            return ResolveTemplateId(typeof(T));
+        }
+
+        public Guid ResolveTemplateId(IEntity entity)
+        {
+            return ResolveTemplateId(entity.GetType());
+        }
+
+        public Guid ResolveTemplateId(Type elementType)
+        {
+            var template = elementType
+                .GetCustomAttribute<TemplateAttribute>();
+            if (template == null)
+                throw new InvalidOperationException("Missing type template");
+            return new Guid(template.Id);
         }
 
         private Type ResolveRootTemplateType(Type elementType)

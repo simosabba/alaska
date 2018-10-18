@@ -17,10 +17,7 @@ namespace Alaska.Foundation.Godzilla.Abstractions
 
     public interface IEntityCollection
     {
-        Type GetEntityType();
-
         IEnumerable<TEntity> GetEntities<TEntity>(IEnumerable<Guid> id) where TEntity : IEntity;
-
         IEntity AddEntity(IEntity item);
         IEnumerable<IEntity> AddEntities(IEnumerable<IEntity> items);
         void UpdateEntity(IEntity item);
