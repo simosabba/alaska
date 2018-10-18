@@ -29,9 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.UI.Cache", "src\ui\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.UI.Logs", "src\ui\Alaska.UI.Logs\Alaska.UI.Logs.csproj", "{DB185955-DD8B-4D35-9E4F-28E1AA1F8493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Demo.WebApp", "src\demo\Alaska.Demo.WebApp\Alaska.Demo.WebApp.csproj", "{E22C9924-4126-43F1-8093-FF32E3B0D4E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Demo.WebApp", "src\demo\Alaska.Demo.WebApp\Alaska.Demo.WebApp.csproj", "{E22C9924-4126-43F1-8093-FF32E3B0D4E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Foundation.Godzilla", "src\foundation\Alaska.Foundation.Godzilla\Alaska.Foundation.Godzilla.csproj", "{A0809754-3064-4878-9EB7-7B0257F665D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Foundation.Godzilla", "src\foundation\Alaska.Foundation.Godzilla\Alaska.Foundation.Godzilla.csproj", "{A0809754-3064-4878-9EB7-7B0257F665D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Foundation.Godzilla.Mongo", "src\foundation\Alaska.Foundation.Godzilla.Mongo\Alaska.Foundation.Godzilla.Mongo.csproj", "{22B18B52-884B-4324-A904-AD05E82A0813}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{A0809754-3064-4878-9EB7-7B0257F665D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0809754-3064-4878-9EB7-7B0257F665D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0809754-3064-4878-9EB7-7B0257F665D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B18B52-884B-4324-A904-AD05E82A0813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B18B52-884B-4324-A904-AD05E82A0813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B18B52-884B-4324-A904-AD05E82A0813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B18B52-884B-4324-A904-AD05E82A0813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{DB185955-DD8B-4D35-9E4F-28E1AA1F8493} = {EC022810-CD65-47F8-8FDA-D2BBA3594B8F}
 		{E22C9924-4126-43F1-8093-FF32E3B0D4E0} = {4EAA3978-32DD-4414-9694-AEFD836195FF}
 		{A0809754-3064-4878-9EB7-7B0257F665D8} = {F6027DF5-D892-4189-B544-C68F91CD66F3}
+		{22B18B52-884B-4324-A904-AD05E82A0813} = {F6027DF5-D892-4189-B544-C68F91CD66F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B961E4BF-244C-457C-9A1D-F14B290C1D9B}
