@@ -251,7 +251,7 @@ namespace Alaska.Foundation.Godzilla.Services
             ValidateData(item);
 
             GetEntityCollection(item).UpdateEntity(item);
-            Hierarchy.SetUpdated(item, DateTime.Now, CurrentUser);
+            Hierarchy.SetUpdated(item, DateTime.Now);
         }
 
         public void Update<TEntity>(TEntity item)
@@ -272,7 +272,7 @@ namespace Alaska.Foundation.Godzilla.Services
             AssertAreUnprotected(entities);
             ValidateData(entities);
             GetEntityCollection(typeof(TEntity)).UpdateEntities(entities);
-            Hierarchy.SetUpdated(entities, DateTime.Now, CurrentUser);
+            Hierarchy.SetUpdated(entities, DateTime.Now);
         }
 
         #endregion
