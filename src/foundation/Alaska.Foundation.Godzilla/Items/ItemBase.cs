@@ -1,5 +1,10 @@
 ﻿using Alaska.Foundation.Core.Logging;
 using Alaska.Foundation.Godzilla.Abstractions;
+using Alaska.Foundation.Godzilla.Converters;
+using Alaska.Foundation.Godzilla.Entries;
+using Alaska.Foundation.Godzilla.Exceptions;
+using Alaska.Foundation.Godzilla.Models;
+using Alaska.Foundation.Godzilla.Services;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,29 +17,33 @@ namespace Alaska.Foundation.Godzilla.Items
     public abstract class ItemBase
     {
         #region Init
-
-        private EntityConverter _converter = new EntityConverter();
-
+        
         protected IEntity _value;
         private IEntityInfo _info;
+        private EntityContext _context;
 
-        internal ItemBase(IEntity entity, IEntityInfo info)
+        internal ItemBase(
+            EntityContext context,
+            IEntity entity, 
+            IEntityInfo info)
         {
             _value = entity;
             _info = info;
         }
-        
+
+        protected EntityContext Context => _context;
+
         public Guid ItemId => _info.ItemId;
         public string Name => _value.EntityName;
-        public Guid TemplateId => _converter.GetEntityTemplateId(_value.GetType());
-        public Template Template => Context.TemplatesCollection.GetTemplate(TemplateId);
+        public Guid TemplateId => _context.Resolver.ResolveTemplateId(_value.GetType());
+        //public Template Template => Context.TemplatesCollection.GetTemplate(TemplateId);
         public IEntityInfo Info => _info;
 
         #endregion
 
         #region Management Items
 
-        private EntityMap EntityMap => EntityConfigurator.Current.Map;
+        //private EntityMap EntityMap => EntityConfigurator.Current.Map;
 
         #endregion
 
@@ -91,7 +100,7 @@ namespace Alaska.Foundation.Godzilla.Items
         public IRelationship<TRelation> AddRelation<TRelation>(Guid targetId, TRelation data)
         {
             var relation = Context.Relationships.AddRelation<TRelation>(ItemId, targetId, data);
-            return new Relationship<TRelation>(relation);
+            return new Relationship<TRelation>(Context, relation);
         }
 
         public IRelationship<TRelation> AddRelationFrom<TRelation, TItem>(IItem<TItem> source)
@@ -138,7 +147,7 @@ namespace Alaska.Foundation.Godzilla.Items
         public IRelationship<TRelation> AddRelationFrom<TRelation>(Guid sourceId, TRelation data)
         {
             var relation = Context.Relationships.AddRelation<TRelation>(sourceId, ItemId, data);
-            return new Relationship<TRelation>(relation);
+            return new Relationship<TRelation>(Context, relation);
         }
 
         public void UpdateRelation<TRelation>(Guid relationId, TRelation data)
@@ -182,14 +191,14 @@ namespace Alaska.Foundation.Godzilla.Items
         public IEnumerable<IRelationship<TRelation>> GetRelations<TRelation>()
         {
             return GetRelationshipEntries<TRelation>()
-                .Select(x => new Relationship<TRelation>(x))
+                .Select(x => new Relationship<TRelation>(Context, x))
                 .ToList();
         }
 
         public IEnumerable<IRelationship> GetRelations()
         {
             return GetRelationshipEntries()
-                .Select(x => new Relationship(x))
+                .Select(x => new Relationship(Context, x))
                 .ToList();
         }
 
@@ -320,7 +329,7 @@ namespace Alaska.Foundation.Godzilla.Items
 
         public bool IsDescendantOf(IItemBase item)
         {
-            return Context.PathBuilder.IsDescendantPath(_info.Path, item.Path);
+            return _context.PathBuilder.IsDescendantPath(_info.Path, item.Path);
         }
 
         public bool IsAncestorOf(IItemBase item)
@@ -415,7 +424,7 @@ namespace Alaska.Foundation.Godzilla.Items
 
         private void EnsureItemId(IEntity value)
         {
-            if (value.Id.IsEmpty())
+            if (value.Id == Guid.Empty)
                 value.Id = Guid.NewGuid();
         }
 

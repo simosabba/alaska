@@ -1,4 +1,5 @@
 ﻿using Alaska.Foundation.Godzilla.Collections;
+using Alaska.Foundation.Godzilla.Entries;
 using Alaska.Foundation.Godzilla.Services;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Alaska.Foundation.Godzilla.Queryable.Filters
 
         public override IEnumerable<Guid> Execute(EntityContext context)
         {
-            var relationship = context.Resolver.GetRelationship(_relationshipType);
+            var relationship = context.Resolver.ResolveRelationshipDefinition(_relationshipType);
             if (relationship == null)
                 throw new InvalidOperationException($"Cannot resolve relationship {_relationshipType.FullName}");
 

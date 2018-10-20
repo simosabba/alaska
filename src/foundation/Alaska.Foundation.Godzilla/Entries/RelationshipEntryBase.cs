@@ -5,8 +5,6 @@ using System.Text;
 
 namespace Alaska.Foundation.Godzilla.Entries
 {
-    public enum RelationDirection { Monodirectional, Bidirectional }
-
     public abstract class RelationshipEntryBase :
         IDatabaseCollectionElement,
         IEntityRelationship

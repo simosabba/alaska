@@ -20,21 +20,26 @@ namespace Alaska.Foundation.Godzilla.Services
     {
         private readonly EntityContextOptions _options;
         private readonly PathBuilder _pathBuilder;
-        private readonly EntityCollectionResolver _resolver;
+        private readonly EntityResolver _resolver;
         private readonly HierarchyCollection _hierarchyCollection;
+        private readonly RelationshipCollection _relationshipCollection;
         private readonly RecycleBinCollection _recycleBinCollection;
 
         public EntityContext(EntityContextOptions options)
         {
             _options = options ?? throw new ArgumentException(nameof(options));
             _pathBuilder = new PathBuilder(options);
-            _resolver = new EntityCollectionResolver();
+            _resolver = new EntityResolver();
             _hierarchyCollection = new HierarchyCollection(options.Collections, _resolver, _pathBuilder);
+            _relationshipCollection = new RelationshipCollection(options.Collections, _resolver);
             _recycleBinCollection = new RecycleBinCollection(options.Collections);
         }
 
+        internal EntityResolver Resolver => _resolver;
         internal EntityContextOptions Options => _options;
         internal HierarchyCollection Hierarchy => _hierarchyCollection;
+        internal RelationshipCollection Relationships => _relationshipCollection;
+        internal PathBuilder PathBuilder => _pathBuilder;
 
         #region Collections
 
@@ -208,7 +213,7 @@ namespace Alaska.Foundation.Godzilla.Services
                 DeletionTime = DateTime.Now,
             });
 
-            RecycleBin.AddItems(thrashItems);
+            _recycleBinCollection.AddItems(thrashItems);
         }
 
         #endregion
@@ -460,7 +465,7 @@ namespace Alaska.Foundation.Godzilla.Services
         private IEnumerable<Guid> FindEntitiesId<TEntity, TRelationsip>(Expression<Func<TEntity, bool>> filter, Func<TRelationsip, bool> relationshipFilter)
         {
             var itemsId = FindEntitiesId<TEntity>(filter);
-            var relations = _Relationships.GetEntitiesRelations<TRelationsip>(itemsId);
+            var relations = _relationshipCollection.GetEntitiesRelations<TRelationsip>(itemsId);
             var filteredRelations = relations.Where(x => relationshipFilter(x.Data)).ToList();
             var filteredItemsByRelations = filteredRelations
                 .Select(x => x.SourceEntityId)

@@ -17,11 +17,11 @@ namespace Alaska.Foundation.Godzilla.Collections
     internal class HierarchyCollection : DatabaseCollection<HierarchyEntry>
     {
         private readonly PathBuilder _pathBuilder;
-        private readonly EntityCollectionResolver _resolver;
+        private readonly EntityResolver _resolver;
 
         public HierarchyCollection(
             DatabaseCollectionOptions options,
-            EntityCollectionResolver resolver,
+            EntityResolver resolver,
             PathBuilder pathBuilder)
             : base("hierarchy", options)
         {

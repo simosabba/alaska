@@ -12,7 +12,7 @@ namespace Alaska.Foundation.Godzilla.Abstractions
         string Name { get; }
         string Path { get; }
         bool IsLeaf { get; }
-        Template Template { get; }
+        //Template Template { get; }
 
         IEntityInfo Info { get; }
 

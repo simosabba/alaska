@@ -2,6 +2,7 @@
 using Alaska.Foundation.Godzilla.Abstractions;
 using Alaska.Foundation.Godzilla.Attributes;
 using Alaska.Foundation.Godzilla.Collections;
+using Alaska.Foundation.Godzilla.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ using System.Text;
 
 namespace Alaska.Foundation.Godzilla.Services
 {
-    internal class EntityCollectionResolver
+    internal class EntityResolver
     {
-        public EntityCollectionResolver()
+        public EntityResolver()
         { }
 
         public EntityCollectionBase ResolveCollection<T>()
@@ -38,6 +39,20 @@ namespace Alaska.Foundation.Godzilla.Services
             var root = ResolveRootTemplateType(elementType);
             var template = root.GetCustomAttribute<TemplateAttribute>();
             return $"entities-{template.Id}";
+        }
+
+        public IRelationshipDefinition ResolveRelationshipDefinition<T>()
+        {
+            return ResolveRelationshipDefinition(typeof(T));
+        }
+
+        public IRelationshipDefinition ResolveRelationshipDefinition(Type relationType)
+        {
+            var relationAttribute = relationType.GetCustomAttribute<RelationshipAttribute>();
+            if (relationAttribute == null)
+                throw new InvalidOperationException($"Invalid relationship type {relationType.FullName}");
+
+            return relationAttribute;
         }
 
         public Guid ResolveTemplateId<T>()
