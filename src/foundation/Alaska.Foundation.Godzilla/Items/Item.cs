@@ -1,4 +1,5 @@
 ﻿using Alaska.Foundation.Godzilla.Abstractions;
+using Alaska.Foundation.Godzilla.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,8 +9,8 @@ namespace Alaska.Foundation.Godzilla.Items
 {
     public sealed class Item : ItemBase, IItem, IQueryableItem
     {
-        internal Item(IEntityData data)
-            : base(data.Entity, data.Info)
+        internal Item(EntityContext context, IEntityData data)
+            : base(context, data.Entity, data.Info)
         { }
 
         public IEntity Value => _value;
@@ -18,8 +19,8 @@ namespace Alaska.Foundation.Godzilla.Items
     public sealed class Item<TEntity> : ItemBase, IItem<TEntity>, IQueryableItem<TEntity>
         where TEntity : IEntity
     {
-        internal Item(IEntityData<TEntity> data)
-            : base(data.Entity, data.Info)
+        internal Item(EntityContext context, IEntityData<TEntity> data)
+            : base(context, data.Entity, data.Info)
         { }
 
         public TEntity Value => (TEntity)_value;

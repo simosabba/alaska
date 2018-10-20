@@ -148,13 +148,13 @@ namespace Alaska.Foundation.Godzilla.Services
             DeleteDescendants(item.Value);
         }
 
-        public void DeleteDescendants(IEntity item)
-        {
-            var descendants = GetDescendants(item, null)
-                .Select(x => x.Value)
-                .ToList();
-            Delete(descendants);
-        }
+        //public void DeleteDescendants(IEntity item)
+        //{
+        //    var descendants = GetDescendants(item, null)
+        //        .Select(x => x.Value)
+        //        .ToList();
+        //    Delete(descendants);
+        //}
 
         public void Delete(Guid entityId)
         {
@@ -300,11 +300,11 @@ namespace Alaska.Foundation.Godzilla.Services
             return ResolveItems<TEntity>(hierarchyItems);
         }
 
-        public IEnumerable<IItem> GetItems(IEnumerable<Guid> id)
-        {
-            var hierarchyItems = Hierarchy.GetHierarchyItems(id);
-            return ResolveItems(hierarchyItems);
-        }
+        //public IEnumerable<IItem> GetItems(IEnumerable<Guid> id)
+        //{
+        //    var hierarchyItems = Hierarchy.GetHierarchyItems(id);
+        //    return ResolveItems(hierarchyItems);
+        //}
 
         public IItem GetItem(Guid entityId)
         {
@@ -450,17 +450,17 @@ namespace Alaska.Foundation.Godzilla.Services
             where TEntity : IEntity
         {
             var hierarchyItems = Hierarchy.GetItems(filter);
-            var templates = new List<string> { TypesMap.GetTemplateId<TEntity>().ToString() };
+            var templates = new List<string> { _resolver.ResolveTemplateId<TEntity>().ToString() };
             //TODO: aggiungere template derivati
             var templateMatchingItems = hierarchyItems.Where(x => templates.Contains(x.TemplateId));
             return ResolveItems<TEntity>(templateMatchingItems);
         }
 
-        private IEnumerable<IItem> Find(Func<HierarchyEntry, bool> filter)
-        {
-            var hierarchyItems = Hierarchy.GetItems(x => filter(x));
-            return ResolveItems(hierarchyItems);
-        }
+        //private IEnumerable<IItem> Find(Func<HierarchyEntry, bool> filter)
+        //{
+        //    var hierarchyItems = Hierarchy.GetItems(x => filter(x));
+        //    return ResolveItems(hierarchyItems);
+        //}
 
         private IEnumerable<Guid> FindEntitiesId<TEntity, TRelationsip>(Expression<Func<TEntity, bool>> filter, Func<TRelationsip, bool> relationshipFilter)
         {
@@ -576,7 +576,7 @@ namespace Alaska.Foundation.Godzilla.Services
         {
             var hierarchyItems = Hierarchy.GetChildren(entity.Id);
             return hierarchyItems
-                .Select(x => FilterAndCleanOrphans(x))
+                //.Select(x => FilterAndCleanOrphans(x))
                 .Where(x => x != null)
                 .Select(x => x.Name);
         }
@@ -586,15 +586,15 @@ namespace Alaska.Foundation.Godzilla.Services
             return GetChildren(entity.Id);
         }
 
-        public IEnumerable<IItem> GetChildren(Guid entityId)
-        {
-            var hierarchyItems = Hierarchy.GetChildren(entityId);
-            var items = ResolveItems(hierarchyItems);
+        //public IEnumerable<IItem> GetChildren(Guid entityId)
+        //{
+        //    var hierarchyItems = Hierarchy.GetChildren(entityId);
+        //    var items = ResolveItems(hierarchyItems);
 
-            return items
-                .Where(x => x.Value != null)
-                .OrderBy(x => x.Name);
-        }
+        //    return items
+        //        .Where(x => x.Value != null)
+        //        .OrderBy(x => x.Name);
+        //}
 
         public IEnumerable<IItem<TEntity>> GetChildren<TEntity>(IEntity entity)
             where TEntity : IEntity
@@ -618,17 +618,17 @@ namespace Alaska.Foundation.Godzilla.Services
                 .OrderBy(x => x.Name);
         }
 
-        public IEnumerable<IItem> GetDescendants(IEntity entity, int? depth)
-        {
-            var hierarchyItems = depth.HasValue ?
-                Hierarchy.GetDescendants(entity, depth.Value) :
-                Hierarchy.GetDescendants(entity);
-            var items = ResolveItems(hierarchyItems);
+        //public IEnumerable<IItem> GetDescendants(IEntity entity, int? depth)
+        //{
+        //    var hierarchyItems = depth.HasValue ?
+        //        Hierarchy.GetDescendants(entity, depth.Value) :
+        //        Hierarchy.GetDescendants(entity);
+        //    var items = ResolveItems(hierarchyItems);
 
-            return items
-                .Where(x => x.Value != null)
-                .OrderBy(x => x.Name);
-        }
+        //    return items
+        //        .Where(x => x.Value != null)
+        //        .OrderBy(x => x.Name);
+        //}
 
         public IEnumerable<IItem<TEntity>> GetDescendants<TEntity>(IEntity entity)
             where TEntity : IEntity
@@ -656,10 +656,10 @@ namespace Alaska.Foundation.Godzilla.Services
                 .OrderBy(x => x.Name);
         }
 
-        internal IItem ResolveItem(HierarchyEntry entry)
-        {
-            return ResolveItems(new List<HierarchyEntry> { entry }).FirstOrDefault();
-        }
+        //internal IItem ResolveItem(HierarchyEntry entry)
+        //{
+        //    return ResolveItems(new List<HierarchyEntry> { entry }).FirstOrDefault();
+        //}
 
         private IEnumerable<IItem<TEntity>> ResolveItems<TEntity>(IEnumerable<TEntity> entries)
             where TEntity : IEntity
@@ -674,63 +674,62 @@ namespace Alaska.Foundation.Godzilla.Services
             return MapData<TEntity>(entries, hierarchyItems);
         }
 
-        internal IEnumerable<IItem> ResolveItems(IEnumerable<HierarchyEntry> entries)
-        {
-            var entitiesInfo = new Dictionary<Guid, EntityData>();
-            foreach (var entry in entries)
-                entitiesInfo[entry.ItemId] = new EntityData(null, entry);
+        //internal IEnumerable<IItem> ResolveItems(IEnumerable<HierarchyEntry> entries)
+        //{
+        //    var entitiesInfo = new Dictionary<Guid, EntityData>();
+        //    foreach (var entry in entries)
+        //        entitiesInfo[entry.ItemId] = new EntityData(null, entry);
 
-            var groups = entries.GroupBy(x => x.CollectionName);
-            foreach (var group in groups)
-            {
-                var collection = _resolver.GetCollection(group.Key);
-                var entities = collection.GetEntitiesFromCollection(group.Select(x => x.ItemId));
-                entities.ToList().ForEach(x => entitiesInfo[x.Id].Entity = x);
-            }
+        //    var groups = entries.GroupBy(x => x.CollectionName);
+        //    foreach (var group in groups)
+        //    {
+        //        var collection = _resolver.GetCollection(group.Key);
+        //        var entities = collection.GetEntitiesFromCollection(group.Select(x => x.ItemId));
+        //        entities.ToList().ForEach(x => entitiesInfo[x.Id].Entity = x);
+        //    }
 
-            return entitiesInfo.Values
-                .Where(x => x.Entity != null)
-                .Select(CreateItem)
-                .ToList();
-        }
+        //    return entitiesInfo.Values
+        //        .Where(x => x.Entity != null)
+        //        .Select(CreateItem)
+        //        .ToList();
+        //}
 
-        private IEnumerable<IItem<TEntity>> ResolveItems<TEntity>(IEnumerable<HierarchyEntry> entries)
-            where TEntity : IEntity
-        {
-            return ResolveItems<TEntity>(entries, null);
-        }
+        //private IEnumerable<IItem<TEntity>> ResolveItems<TEntity>(IEnumerable<HierarchyEntry> entries)
+        //    where TEntity : IEntity
+        //{
+        //    return ResolveItems<TEntity>(entries, null);
+        //}
 
-        private IEnumerable<IItem<TEntity>> ResolveItems<TEntity>(IEnumerable<HierarchyEntry> entries, Expression<Func<TEntity, bool>> filter)
-            where TEntity : IEntity
-        {
-            if (!entries.Any())
-                return new List<IItem<TEntity>>();
+        //private IEnumerable<IItem<TEntity>> ResolveItems<TEntity>(IEnumerable<HierarchyEntry> entries, Expression<Func<TEntity, bool>> filter)
+        //    where TEntity : IEntity
+        //{
+        //    if (!entries.Any())
+        //        return new List<IItem<TEntity>>();
 
-            var entitiesInfo = new Dictionary<Guid, EntityData<TEntity>>();
-            foreach (var entry in entries)
-                entitiesInfo[entry.ItemId] = new EntityData<TEntity>(default(TEntity), entry);
+        //    var entitiesInfo = new Dictionary<Guid, EntityData<TEntity>>();
+        //    foreach (var entry in entries)
+        //        entitiesInfo[entry.ItemId] = new EntityData<TEntity>(default(TEntity), entry);
+            
+        //    var collectionName = 
+        //    var group = entries
+        //        .GroupBy(x => x.CollectionName)
+        //        .First(x => x.Key.Equals(collectionName, StringComparison.OrdinalIgnoreCase));
 
-            var collectionName = _resolver.GetCollectionName<TEntity>();
+        //    var collection = _resolver.GetCollection(group.Key);
+        //    var idList = group.Select(x => x.ItemId).ToList();
+        //    var idFilter = FilterBuilder<TEntity>.Filter(x => idList.Contains(x.Id));
+        //    var entityFilter = filter == null ?
+        //        idFilter :
+        //        FilterBuilder<TEntity>.And(idFilter, FilterBuilder<TEntity>.Filter(filter));
 
-            var group = entries
-                .GroupBy(x => x.CollectionName)
-                .First(x => x.Key.Equals(collectionName, StringComparison.OrdinalIgnoreCase));
+        //    var entities = collection.GetEntities<TEntity>(entityFilter);
+        //    entities.ToList().ForEach(x => entitiesInfo[x.Id].Entity = x);
 
-            var collection = _resolver.GetCollection(group.Key);
-            var idList = group.Select(x => x.ItemId).ToList();
-            var idFilter = FilterBuilder<TEntity>.Filter(x => idList.Contains(x.Id));
-            var entityFilter = filter == null ?
-                idFilter :
-                FilterBuilder<TEntity>.And(idFilter, FilterBuilder<TEntity>.Filter(filter));
-
-            var entities = collection.GetEntities<TEntity>(entityFilter);
-            entities.ToList().ForEach(x => entitiesInfo[x.Id].Entity = x);
-
-            return entitiesInfo.Values
-                .Where(x => x.Entity != null)
-                .Select(CreateItem<TEntity>)
-                .ToList();
-        }
+        //    return entitiesInfo.Values
+        //        .Where(x => x.Entity != null)
+        //        .Select(CreateItem<TEntity>)
+        //        .ToList();
+        //}
 
         #endregion
 
@@ -743,7 +742,7 @@ namespace Alaska.Foundation.Godzilla.Services
 
         private IItem CreateItem(IEntityData data)
         {
-            return new Item(data);
+            return new Item(this, data);
         }
 
         private IItem<TEntity> CreateItem<TEntity>(TEntity entity, IEntityInfo info)
@@ -755,7 +754,7 @@ namespace Alaska.Foundation.Godzilla.Services
         private IItem<TEntity> CreateItem<TEntity>(IEntityData<TEntity> data)
             where TEntity : IEntity
         {
-            return new Item<TEntity>(data);
+            return new Item<TEntity>(this, data);
         }
 
         #endregion
@@ -856,19 +855,20 @@ namespace Alaska.Foundation.Godzilla.Services
 
         internal void ValidateData(IEntity entity)
         {
-            _entityValidationHelper.Validate(entity);
+            //todo
+            //_entityValidationHelper.Validate(entity);
         }
 
-        private HierarchyEntry FilterAndCleanOrphans(HierarchyEntry entry)
-        {
-            var resolvedItem = ResolveItem(entry);
-            if (resolvedItem == null)
-            {
-                Hierarchy.DeleteItem(entry);
-                return null;
-            }
-            return entry;
-        }
+        //private HierarchyEntry FilterAndCleanOrphans(HierarchyEntry entry)
+        //{
+        //    var resolvedItem = ResolveItem(entry);
+        //    if (resolvedItem == null)
+        //    {
+        //        Hierarchy.DeleteItem(entry);
+        //        return null;
+        //    }
+        //    return entry;
+        //}
 
         private void EnsureIdAndName(IEnumerable<IEntity> entity)
         {

@@ -22,7 +22,7 @@ namespace Alaska.Foundation.Godzilla.Abstractions
 
     public interface IQueryableItem
     {
-        bool Is<TEntity>() where TEntity : IEntity;
+        //bool Is<TEntity>() where TEntity : IEntity;
         bool HasRelationship<TRelationsip>();
         //bool HasRelationship<TRelationsip>(IEntity entity);
         //bool HasRelationship<TRelationsip>(IEnumerable<IEntity> entities);

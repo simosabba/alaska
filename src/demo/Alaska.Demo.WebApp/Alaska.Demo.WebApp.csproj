@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.1916590" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\foundation\Alaska.Foundation.Godzilla\Alaska.Foundation.Godzilla.csproj" />
-  </ItemGroup>
-
 </Project>

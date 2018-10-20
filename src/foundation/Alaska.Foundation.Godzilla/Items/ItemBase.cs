@@ -202,49 +202,49 @@ namespace Alaska.Foundation.Godzilla.Items
                 .ToList();
         }
 
-        public IEnumerable<IEntityRelationshipDetails> GetDetailedRelations()
-        {
-            var relations = GetRelationshipEntries();
-            var relatedItemsId = relations
-                    .Select(x => x.SourceEntityId)
-                    .Union(relations.Select(x => x.TargetEntityId));
-            var relatedItems = Context.GetItems(relatedItemsId)
-                .ToDictionary(x => x.Value.Id);
+        //public IEnumerable<IEntityRelationshipDetails> GetDetailedRelations()
+        //{
+        //    var relations = GetRelationshipEntries();
+        //    var relatedItemsId = relations
+        //            .Select(x => x.SourceEntityId)
+        //            .Union(relations.Select(x => x.TargetEntityId));
+        //    var relatedItems = Context.GetItems(relatedItemsId)
+        //        .ToDictionary(x => x.Value.Id);
 
-            var results = new List<EntityRelationshipData>();
-            foreach (var relation in relations)
-            {
-                var sourceEntity = relatedItems[relation.SourceEntityId];
-                if (sourceEntity == null)
-                {
-                    Logger.Current.LogWarning($"Source item {relation.SourceEntityId} not found for relation {relation.Id}");
-                    continue;
-                }
+        //    var results = new List<EntityRelationshipData>();
+        //    foreach (var relation in relations)
+        //    {
+        //        var sourceEntity = relatedItems[relation.SourceEntityId];
+        //        if (sourceEntity == null)
+        //        {
+        //            Logger.Current.LogWarning($"Source item {relation.SourceEntityId} not found for relation {relation.Id}");
+        //            continue;
+        //        }
 
-                var targetEntity = relatedItems[relation.TargetEntityId];
-                if (targetEntity == null)
-                {
-                    Logger.Current.LogWarning($"Target item {relation.TargetEntityId} not found for relation {relation.Id}");
-                    continue;
-                }
+        //        var targetEntity = relatedItems[relation.TargetEntityId];
+        //        if (targetEntity == null)
+        //        {
+        //            Logger.Current.LogWarning($"Target item {relation.TargetEntityId} not found for relation {relation.Id}");
+        //            continue;
+        //        }
 
-                var item = new EntityRelationshipData
-                {
-                    Relation = relation,
-                    SourceEntity = sourceEntity,
-                    TargetEntity = targetEntity,
-                };
-                results.Add(item);
-            }
+        //        var item = new EntityRelationshipData
+        //        {
+        //            Relation = relation,
+        //            SourceEntity = sourceEntity,
+        //            TargetEntity = targetEntity,
+        //        };
+        //        results.Add(item);
+        //    }
 
-            return results;
-        }
+        //    return results;
+        //}
 
-        public bool Is<TEntity>()
-            where TEntity : IEntity
-        {
-            return Template.TypeInfo.Type == typeof(TEntity);
-        }
+        //public bool Is<TEntity>()
+        //    where TEntity : IEntity
+        //{
+        //    return Template.TypeInfo.Type == typeof(TEntity);
+        //}
 
         public bool HasRelationship<TRelationsip>()
         {
@@ -381,15 +381,15 @@ namespace Alaska.Foundation.Godzilla.Items
 
         #region Get Descendants 
 
-        public IEnumerable<IItem> GetDescendants()
-        {
-            return Context.GetDescendants(_value, null);
-        }
+        //public IEnumerable<IItem> GetDescendants()
+        //{
+        //    return Context.GetDescendants(_value, null);
+        //}
 
-        public IEnumerable<IItem> GetDescendants(uint depth)
-        {
-            return Context.GetDescendants(_value, (int)depth);
-        }
+        //public IEnumerable<IItem> GetDescendants(uint depth)
+        //{
+        //    return Context.GetDescendants(_value, (int)depth);
+        //}
 
         public IEnumerable<IItem<TEntity>> GetDescendants<TEntity>() where TEntity : IEntity
         {
